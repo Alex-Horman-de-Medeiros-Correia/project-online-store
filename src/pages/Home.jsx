@@ -1,6 +1,8 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import Button from '../components/Button';
+import List from '../components/List';
 
 class Home extends React.Component {
   constructor() {
@@ -51,15 +53,17 @@ class Home extends React.Component {
           >
             Pesquisar
           </button>
+          { resultsLength > 0 ? (
+            searchResults.map(({ title, price, thumbnail, id }) => (<ProductCard
+              key={ id }
+              title={ title }
+              price={ price }
+              thumbnail={ thumbnail }
+            />))
+          ) : <h1>Nenhum produto foi encontrado</h1>}
+          <Button />
         </header>
-        { resultsLength > 0 ? (
-          searchResults.map(({ title, price, thumbnail, id }) => (<ProductCard
-            key={ id }
-            title={ title }
-            price={ price }
-            thumbnail={ thumbnail }
-          />))
-        ) : <h1>Nenhum produto foi encontrado</h1>}
+        <List />
       </>
     );
   }
