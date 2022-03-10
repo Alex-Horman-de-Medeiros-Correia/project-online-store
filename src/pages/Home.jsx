@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../components/Button';
 import List from '../components/List';
 
 class Home extends React.Component {
@@ -7,6 +8,7 @@ class Home extends React.Component {
       <>
         <header>
           <input type="text" />
+          <Button />
           <h2 data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </h2>
