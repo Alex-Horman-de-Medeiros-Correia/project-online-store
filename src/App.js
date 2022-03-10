@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import Content from './components/Content';
 import ShoppingCart from './pages/ShoppingCart';
 
@@ -9,7 +8,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Content />
-        <Route path='/shopping-cart' component={ShoppingCart} />
+        <Route path="/shopping-cart" component={ ShoppingCart } />
       </BrowserRouter>
     );
   }
