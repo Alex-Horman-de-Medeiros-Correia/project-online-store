@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductCard from './ProductCard';
 
 const api = require('../services/api');
 
@@ -7,6 +8,7 @@ class List extends React.Component {
     super();
     this.state = {
       categories: [],
+      categoriesResults: [],
     };
   }
 
@@ -18,26 +20,42 @@ class List extends React.Component {
     this.setState({ categories: await api.getCategories() });
   }
 
+  onChangeRequest = async ({ target }) => {
+    const response = await api.getProductsFromCategory(target.id);
+    this.setState({
+      categoriesResults: [...response.results],
+    });
+  }
+
   render() {
-    const { categories } = this.state;
+    const { categories, categoriesResults } = this.state;
     return (
-      <ul>
-        {categories.map((categorie) => (
-          <li key={ categorie.id }>
-            <label
-              htmlFor={ categorie.id }
-              data-testid="category"
-            >
-              <input
-                type="radio"
-                name="categorias"
-                id={ categorie.id }
-              />
-              {categorie.name}
-            </label>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <ul>
+          {categories.map((categorie) => (
+            <li key={ categorie.id }>
+              <label
+                htmlFor={ categorie.id }
+                data-testid="category"
+              >
+                <input
+                  type="radio"
+                  name="categorias"
+                  id={ categorie.id }
+                  onChange={ this.onChangeRequest }
+                />
+                {categorie.name}
+              </label>
+            </li>
+          ))}
+        </ul>
+        { categoriesResults.map(({ title, price, thumbnail, id }) => (<ProductCard
+          key={ id }
+          title={ title }
+          price={ price }
+          thumbnail={ thumbnail }
+        />))}
+      </div>
     );
   }
 }
