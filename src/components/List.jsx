@@ -21,25 +21,23 @@ class List extends React.Component {
   render() {
     const { categories } = this.state;
     return (
-      <>
-        { categories.map((categorie) => (
-          <ul key={ categorie.id }>
-            <li>
+      <ul>
+        {categories.map((categorie) => (
+          <li key={ categorie.id }>
+            <label
+              htmlFor={ categorie.id }
+              data-testid="category"
+            >
               <input
                 type="radio"
-                name={ categorie.id }
+                name="categorias"
                 id={ categorie.id }
               />
-              <label
-                htmlFor={ categorie.id }
-                data-testid="category"
-              >
-                { categorie.name }
-              </label>
-            </li>
-          </ul>
-        )) }
-      </>
+              {categorie.name}
+            </label>
+          </li>
+        ))}
+      </ul>
     );
   }
 }
