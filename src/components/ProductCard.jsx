@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 class ProductCard extends React.Component {
   render() {
     const { title, price, thumbnail, id } = this.props;
-
     return (
       <Link data-testid="product-detail-link" to={ `/details/${id}` }>
         <div data-testid="product">
