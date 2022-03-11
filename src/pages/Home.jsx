@@ -12,7 +12,30 @@ class Home extends React.Component {
       searchText: '',
       searchResults: [],
       resultsLength: 0,
+      cart: [],
+      categoryId: '',
     };
+  }
+
+  getCategoryId = async (id) => {
+    const { searchText } = this.state;
+    const textAndCategory = await getProductsFromCategoryAndQuery(searchText, id);
+    this.setState({
+      searchResults: textAndCategory.results,
+      categoryId: id,
+      resultsLength: textAndCategory.results.length,
+    });
+  }
+
+  handleCart = (title, url, value) => {
+    const obj = {
+      name: title,
+      image: url,
+      price: value,
+    };
+    this.setState((prevState) => ({
+      cart: [...prevState.cart, obj],
+    }));
   }
 
   handleChange = (event) => {
@@ -22,9 +45,8 @@ class Home extends React.Component {
   }
 
   handleButton = async () => {
-    const { searchText } = this.state;
-
-    const products = await getProductsFromCategoryAndQuery(searchText);
+    const { searchText, categoryId } = this.state;
+    const products = await getProductsFromCategoryAndQuery(searchText, categoryId);
     this.setState({
       searchResults: [...products.results],
       resultsLength: products.results.length,
@@ -32,7 +54,8 @@ class Home extends React.Component {
   }
 
   render() {
-    const { searchResults, resultsLength } = this.state;
+    const { searchResults, resultsLength, cart } = this.state;
+    const cartButton = this.handleCart;
 
     return (
       <>
@@ -43,6 +66,7 @@ class Home extends React.Component {
             name="searchText"
             onChange={ this.handleChange }
           />
+          <Button cartItems={ cart } />
           <h2 data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </h2>
@@ -54,16 +78,24 @@ class Home extends React.Component {
             Pesquisar
           </button>
           { resultsLength > 0 ? (
-            searchResults.map(({ title, price, thumbnail, id }) => (<ProductCard
-              key={ id }
-              title={ title }
-              price={ price }
-              thumbnail={ thumbnail }
-            />))
+            searchResults.map(({ title, price, thumbnail, id }) => (
+              <div key={ id }>
+                <ProductCard
+                  title={ title }
+                  price={ price }
+                  thumbnail={ thumbnail }
+                />
+                <button
+                  type="button"
+                  onClick={ () => cartButton(title, thumbnail, price) }
+                  data-testid="product-add-to-cart"
+                >
+                  Adicionar ao Carrinho
+                </button>
+              </div>))
           ) : <h1>Nenhum produto foi encontrado</h1>}
-          <Button />
         </header>
-        <List />
+        <List idFunction={ this.getCategoryId } />
       </>
     );
   }

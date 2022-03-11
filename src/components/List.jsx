@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCard from './ProductCard';
+import PropTypes from 'prop-types';
 
 const api = require('../services/api');
 
@@ -8,7 +8,6 @@ class List extends React.Component {
     super();
     this.state = {
       categories: [],
-      categoriesResults: [],
     };
   }
 
@@ -20,15 +19,10 @@ class List extends React.Component {
     this.setState({ categories: await api.getCategories() });
   }
 
-  onChangeRequest = async ({ target }) => {
-    const response = await api.getProductsFromCategory(target.id);
-    this.setState({
-      categoriesResults: [...response.results],
-    });
-  }
-
   render() {
-    const { categories, categoriesResults } = this.state;
+    const { categories } = this.state;
+    const { idFunction } = this.props;
+
     return (
       <div>
         <ul>
@@ -42,22 +36,20 @@ class List extends React.Component {
                   type="radio"
                   name="categorias"
                   id={ categorie.id }
-                  onChange={ this.onChangeRequest }
+                  onChange={ () => idFunction(categorie.id) }
                 />
                 {categorie.name}
               </label>
             </li>
           ))}
         </ul>
-        { categoriesResults.map(({ title, price, thumbnail, id }) => (<ProductCard
-          key={ id }
-          title={ title }
-          price={ price }
-          thumbnail={ thumbnail }
-        />))}
       </div>
     );
   }
 }
+
+List.propTypes = {
+  idFunction: PropTypes.func.isRequired,
+};
 
 export default List;
