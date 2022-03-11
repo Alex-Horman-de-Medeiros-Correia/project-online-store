@@ -50,6 +50,7 @@ class List extends React.Component {
           ))}
         </ul>
         { categoriesResults.map(({ title, price, thumbnail, id }) => (<ProductCard
+          id={ id }
           key={ id }
           title={ title }
           price={ price }
