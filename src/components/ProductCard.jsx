@@ -7,7 +7,7 @@ class ProductCard extends React.Component {
     const { title, price, thumbnail, id } = this.props;
 
     return (
-      <Link data-testid="product-detail-link" to={ `/details/${id}` } >
+      <Link data-testid="product-detail-link" to={ `/details/${id}` }>
         <div data-testid="product">
           <h2>
             {' '}
@@ -30,6 +30,7 @@ ProductCard.propTypes = {
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   thumbnail: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default ProductCard;
