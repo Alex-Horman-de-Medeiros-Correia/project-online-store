@@ -9,7 +9,7 @@ class Content extends React.Component {
     return (
       <main>
         <Switch>
-          <Route path="/details/:id" render={ (props) => <Details { ...props } /> } />
+          <Route path="/details/:id" component={ Details } />
           <Route path="/shopping-cart" component={ ShoppingCart } />
           <Route exact path="/" component={ Home } />
         </Switch>
