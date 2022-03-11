@@ -57,7 +57,12 @@ class Details extends React.Component {
 }
 
 Details.propTypes = {
-  match: PropTypes.object.isRequired,
+  match: PropTypes.shape({
+    isExact: PropTypes.bool.isRequired,
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default Details;
