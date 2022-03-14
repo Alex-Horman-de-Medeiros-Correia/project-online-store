@@ -12,7 +12,7 @@ class Home extends React.Component {
       searchText: '',
       searchResults: [],
       resultsLength: 0,
-      cart: [],
+      cart: {},
       categoryId: '',
     };
   }
@@ -33,8 +33,8 @@ class Home extends React.Component {
       image: url,
       price: value,
     };
-    this.setState((prevState) => ({
-      cart: [...prevState.cart, obj],
+    this.setState(() => ({
+      cart: obj,
     }));
   }
 
@@ -81,6 +81,7 @@ class Home extends React.Component {
             searchResults.map(({ title, price, thumbnail, id }) => (
               <div key={ id }>
                 <ProductCard
+                  handleCartDetails={ this.handleCart }
                   title={ title }
                   price={ price }
                   thumbnail={ thumbnail }
