@@ -20,7 +20,11 @@ class Button extends React.Component {
 }
 
 Button.propTypes = {
-  cartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  cartItems: PropTypes.arrayOf(PropTypes.object),
+};
+
+Button.defaultProps = {
+  cartItems: undefined,
 };
 
 export default Button;
