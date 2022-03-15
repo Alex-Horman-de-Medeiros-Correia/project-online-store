@@ -59,6 +59,7 @@ class ShoppingCart extends React.Component {
               price={ each.price }
               sum={ sum }
               sub={ sub }
+              availableQuantity={ each.availableQuantity }
             />
           ))
         ) : (

@@ -53,11 +53,12 @@ class Details extends React.Component {
     });
   }
 
-  handleCart = (title, url, value) => {
+  handleCart = (title, url, value, availableQuantity) => {
     const obj = {
       name: title,
       image: url,
       price: value,
+      availableQuantity,
     };
     this.setState(() => ({
       cart: obj,
@@ -66,13 +67,18 @@ class Details extends React.Component {
 
   render() {
     const { product, attributes, cart, reviews } = this.state;
-    const { title, price, thumbnail } = product;
+    const {
+      title,
+      price,
+      thumbnail,
+      available_quantity: availableQuantity } = product;
+    //  shipping: { free_shipping: freeShipping
 
     return (
       <div data-testid="product-detail-name">
         <button
           type="button"
-          onClick={ () => this.handleCart(title, thumbnail, price) }
+          onClick={ () => this.handleCart(title, thumbnail, price, availableQuantity) }
           data-testid="product-detail-add-to-cart"
         >
           Adicionar ao Carrinho
