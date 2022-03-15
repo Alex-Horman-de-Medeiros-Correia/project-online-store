@@ -6,7 +6,7 @@ class ProductCard extends React.Component {
   teste = () => console.log('teste');
 
   render() {
-    const { title, price, thumbnail, id } = this.props;
+    const { title, price, thumbnail, id, freeShipping } = this.props;
     return (
       <Link
         data-testid="product-detail-link"
@@ -26,6 +26,7 @@ class ProductCard extends React.Component {
             {' '}
           </p>
           <img src={ thumbnail } alt={ title } />
+          { freeShipping && <p data-testid="free-shipping">Frete grátis</p> }
         </div>
       </Link>
     );
@@ -37,6 +38,7 @@ ProductCard.propTypes = {
   price: PropTypes.number.isRequired,
   thumbnail: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  freeShipping: PropTypes.bool.isRequired,
 };
 
 export default ProductCard;
