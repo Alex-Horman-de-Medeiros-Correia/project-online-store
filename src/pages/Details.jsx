@@ -10,6 +10,7 @@ class Details extends React.Component {
     this.state = {
       product: {},
       attributes: [],
+      cart: {},
     };
   }
 
@@ -27,30 +28,48 @@ class Details extends React.Component {
     });
   }
 
+  handleCart = (title, url, value) => {
+    const obj = {
+      name: title,
+      image: url,
+      price: value,
+    };
+    this.setState(() => ({
+      cart: obj,
+    }));
+  }
+
   render() {
-    const { product, attributes } = this.state;
+    const { product, attributes, cart } = this.state;
     const { title, price, thumbnail } = product;
 
     return (
       <div data-testid="product-detail-name">
-        <h2>{ title }</h2>
-        <p>{ price }</p>
+        <button
+          type="button"
+          onClick={ () => this.handleCart(title, thumbnail, price) }
+          data-testid="product-detail-add-to-cart"
+        >
+          Adicionar ao Carrinho
+        </button>
+        <h2>{title}</h2>
+        <p>{price}</p>
         <img src={ thumbnail } alt={ title } />
         <ul>
-          { attributes.map((attribute) => {
+          {attributes.map((attribute) => {
             const { id, name } = attribute;
             const valueName = attribute.value_name;
             return (
               <li key={ id }>
                 <p>
-                  { name }
-                  { valueName }
+                  {name}
+                  {valueName}
                 </p>
               </li>
             );
           })}
         </ul>
-        <Button />
+        <Button cartItems={ cart } />
       </div>
     );
   }

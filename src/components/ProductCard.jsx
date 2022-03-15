@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class ProductCard extends React.Component {
+  teste = () => console.log('teste');
+
   render() {
     const { title, price, thumbnail, id } = this.props;
     return (
-      <Link data-testid="product-detail-link" to={ `/details/${id}` }>
+      <Link
+        data-testid="product-detail-link"
+        to={ {
+          pathname: `/details/${id}`,
+        } }
+      >
         <div data-testid="product">
           <h2>
             {' '}
