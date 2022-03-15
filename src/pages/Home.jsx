@@ -27,11 +27,12 @@ class Home extends React.Component {
     });
   }
 
-  handleCart = (title, url, value) => {
+  handleCart = (title, url, value, availableQuantity) => {
     const obj = {
       name: title,
       image: url,
       price: value,
+      availableQuantity,
     };
     this.setState(() => ({
       cart: obj,
@@ -78,23 +79,34 @@ class Home extends React.Component {
             Pesquisar
           </button>
           { resultsLength > 0 ? (
-            searchResults.map(({ title, price, thumbnail, id }) => (
-              <div key={ id }>
-                <ProductCard
-                  handleCartDetails={ this.handleCart }
-                  title={ title }
-                  price={ price }
-                  thumbnail={ thumbnail }
-                  id={ id }
-                />
-                <button
-                  type="button"
-                  onClick={ () => cartButton(title, thumbnail, price) }
-                  data-testid="product-add-to-cart"
-                >
-                  Adicionar ao Carrinho
-                </button>
-              </div>))
+            searchResults.map((item) => {
+              const {
+                title,
+                price,
+                thumbnail,
+                id,
+                available_quantity: availableQuantity,
+                shipping: { free_shipping: freeShipping } } = item;
+              return (
+                <div key={ id }>
+                  <ProductCard
+                    handleCartDetails={ this.handleCart }
+                    title={ title }
+                    price={ price }
+                    thumbnail={ thumbnail }
+                    id={ id }
+                  />
+                  <button
+                    type="button"
+                    onClick={ () => cartButton(title, thumbnail, price,
+                      availableQuantity, freeShipping) }
+                    data-testid="product-add-to-cart"
+                  >
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              );
+            })
           ) : <h1>Nenhum produto foi encontrado</h1>}
         </header>
         <List idFunction={ this.getCategoryId } />

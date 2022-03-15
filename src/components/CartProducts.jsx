@@ -10,10 +10,13 @@ class CartProducts extends React.Component {
   }
 
   addQuantity = () => {
-    const { sum, price } = this.props;
-    this.setState((prevState) => ({
-      quantity: prevState.quantity + 1,
-    }), sum(price));
+    const { sum, price, availableQuantity } = this.props;
+    const { quantity } = this.state;
+    if (quantity < availableQuantity) {
+      this.setState((prevState) => ({
+        quantity: prevState.quantity + 1,
+      }), sum(price));
+    }
   }
 
   subQuantity = () => {
@@ -66,6 +69,7 @@ CartProducts.propTypes = {
   price: PropTypes.number.isRequired,
   sum: PropTypes.func.isRequired,
   sub: PropTypes.func.isRequired,
+  availableQuantity: PropTypes.number.isRequired,
 };
 
 export default CartProducts;
