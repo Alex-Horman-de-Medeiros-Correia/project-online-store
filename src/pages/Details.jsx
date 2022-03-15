@@ -71,8 +71,8 @@ class Details extends React.Component {
       title,
       price,
       thumbnail,
-      available_quantity: availableQuantity } = product;
-    //  shipping: { free_shipping: freeShipping
+      available_quantity: availableQuantity,
+      shipping: { free_shipping: freeShipping } } = product;
 
     return (
       <div data-testid="product-detail-name">
@@ -86,6 +86,7 @@ class Details extends React.Component {
         <h2>{title}</h2>
         <p>{price}</p>
         <img src={ thumbnail } alt={ title } />
+        { freeShipping && <p data-testid="free-shipping">Frete grátis</p> }
         <ul>
           {attributes.map((attribute) => {
             const { id, name } = attribute;

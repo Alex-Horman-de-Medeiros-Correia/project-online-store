@@ -95,6 +95,7 @@ class Home extends React.Component {
                     price={ price }
                     thumbnail={ thumbnail }
                     id={ id }
+                    freeShipping={ freeShipping }
                   />
                   <button
                     type="button"
