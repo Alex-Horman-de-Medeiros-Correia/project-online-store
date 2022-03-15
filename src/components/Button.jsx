@@ -18,6 +18,15 @@ class Button extends React.Component {
   }
 
   componentDidUpdate() {
+    this.handleCart();
+  }
+
+  componentWillUnmount() {
+    const { cart } = this.state;
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  handleCart = () => {
     const { cart } = this.state;
     const { cartItems } = this.props;
     if (cart === null) {
@@ -29,11 +38,6 @@ class Button extends React.Component {
         cart: [...prevStates.cart, cartItems],
       }));
     }
-  }
-
-  componentWillUnmount() {
-    const { cart } = this.state;
-    sessionStorage.setItem('cart', JSON.stringify(cart));
   }
 
   render() {
@@ -53,11 +57,15 @@ class Button extends React.Component {
 }
 
 Button.propTypes = {
-  cartItems: PropTypes.arrayOf(PropTypes.object),
+  cartItems: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 };
 
 Button.defaultProps = {
-  cartItems: undefined,
+  cartItems: PropTypes.shape({
+    name: undefined,
+  }),
 };
 
 export default Button;
