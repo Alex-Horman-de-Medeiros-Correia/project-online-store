@@ -38,7 +38,11 @@ ProductCard.propTypes = {
   price: PropTypes.number.isRequired,
   thumbnail: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  freeShipping: PropTypes.bool.isRequired,
+  freeShipping: PropTypes.bool,
+};
+
+ProductCard.defaultProps = {
+  freeShipping: false,
 };
 
 export default ProductCard;
