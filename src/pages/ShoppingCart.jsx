@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import CartProducts from '../components/CartProducts';
 
 class ShoppingCart extends React.Component {
@@ -68,6 +69,15 @@ class ShoppingCart extends React.Component {
         <h2>
           { totalValue }
         </h2>
+        <Link
+          to={ {
+            pathname: '/checkout',
+            state: totalValue,
+          } }
+          data-testid="checkout-products"
+        >
+          Finalizar compra
+        </Link>
       </div>
     );
   }
