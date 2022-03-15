@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getProductsFromId } from '../services/api';
 import Button from '../components/Button';
+import Form from '../components/Form';
 
 class Details extends React.Component {
   constructor() {
@@ -11,11 +12,35 @@ class Details extends React.Component {
       product: {},
       attributes: [],
       cart: {},
+      reviews: [],
     };
   }
 
   componentDidMount() {
     this.requestProduct();
+    const retrieve = JSON.parse(localStorage.getItem('reviews'));
+    this.setState({ reviews: retrieve });
+  }
+
+  componentWillUnmount() {
+    const { reviews } = this.state;
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+  }
+
+  submitReview = (email, rating, productEvaluation) => {
+    const { reviews } = this.state;
+    const review = {
+      email,
+      rating,
+      productEvaluation,
+    };
+    if (reviews) {
+      this.setState((prevState) => ({
+        reviews: [...prevState.reviews, review],
+      }));
+    } else {
+      this.setState({ reviews: [review] });
+    }
   }
 
   requestProduct = async () => {
@@ -40,7 +65,7 @@ class Details extends React.Component {
   }
 
   render() {
-    const { product, attributes, cart } = this.state;
+    const { product, attributes, cart, reviews } = this.state;
     const { title, price, thumbnail } = product;
 
     return (
@@ -70,6 +95,16 @@ class Details extends React.Component {
           })}
         </ul>
         <Button cartItems={ cart } />
+        <div>
+          <Form review={ this.submitReview } />
+        </div>
+        { reviews && reviews.map((review) => (
+          <div key={ review.email }>
+            <p>{ review.email }</p>
+            <p>{ review.rating }</p>
+            <p>{ review.productEvaluation }</p>
+          </div>
+        ))}
       </div>
     );
   }
