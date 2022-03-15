@@ -13,6 +13,7 @@ class Details extends React.Component {
       attributes: [],
       cart: {},
       reviews: [],
+      freeShipping: false,
     };
   }
 
@@ -50,6 +51,7 @@ class Details extends React.Component {
     this.setState({
       product,
       attributes: [...product.attributes],
+      freeShipping: product.shipping.free_shipping,
     });
   }
 
@@ -66,13 +68,12 @@ class Details extends React.Component {
   }
 
   render() {
-    const { product, attributes, cart, reviews } = this.state;
+    const { product, attributes, cart, reviews, freeShipping } = this.state;
     const {
       title,
       price,
       thumbnail,
-      available_quantity: availableQuantity,
-      shipping: { free_shipping: freeShipping } } = product;
+      available_quantity: availableQuantity } = product;
 
     return (
       <div data-testid="product-detail-name">
