@@ -42,6 +42,7 @@ class Button extends React.Component {
 
   render() {
     const { cart } = this.state;
+    const cartFiltered = cart ? cart.filter((item) => Object.keys(item).length !== 0) : 0;
     return (
       <Link
         data-testid="shopping-cart-button"
@@ -51,6 +52,7 @@ class Button extends React.Component {
         } }
       >
         Carrinho
+        <p data-testid="shopping-cart-size">{ cart && cartFiltered.length }</p>
       </Link>
     );
   }
